@@ -5,17 +5,13 @@
 const char* ssid = "Neuronauts";
 const char* password = "neuroftw";
 
-// Server URL
 const char* serverUrl = "http://ptsv3.com/t/neuronauts/";
 
-// Create an instance of HTTPClient
 HTTPClient http;
 
 void setup() {
-  // Start serial communication
   Serial.begin(115200);
-  
-  // Connect to Wi-Fi
+
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
@@ -26,17 +22,14 @@ void setup() {
 }
 
 void loop() {
-  // Ensure Wi-Fi is connected
   if (WiFi.status() == WL_CONNECTED) {
-    // Start HTTP connection
     http.begin(serverUrl);
-    
-    // Set the Content-Type header for JSON
+
     http.addHeader("Content-Type", "application/json");
 
     // Create a simple JSON payload
     String payload = "{\"message\": \"Hello from Xiao ESP32-S3!\"}";
-    
+
     // Send POST request
     int httpResponseCode = http.POST(payload);
 
@@ -48,7 +41,7 @@ void loop() {
     } else {
       Serial.println("Error in sending POST request");
     }
-    
+
     // Close the HTTP connection
     http.end();
   } else {
